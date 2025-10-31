@@ -1,3 +1,4 @@
+import type { AutoConnectConfig } from "@core/services/autoconnect.ts";
 import { featureFlags } from "@core/services/featureFlags.ts";
 import { createStorage } from "@core/stores/utils/indexDB.ts";
 import { produce } from "immer";
@@ -24,6 +25,8 @@ export interface AppState extends AppData {
   connectDialogOpen: boolean;
   nodeNumDetails: number;
   commandPaletteOpen: boolean;
+  kioskMode: boolean;
+  autoConnectConfig: AutoConnectConfig | null;
 
   setRasterSources: (sources: RasterSource[]) => void;
   addRasterSource: (source: RasterSource) => void;
@@ -33,6 +36,7 @@ export interface AppState extends AppData {
   setNodeNumToBeRemoved: (nodeNum: number) => void;
   setConnectDialogOpen: (open: boolean) => void;
   setNodeNumDetails: (nodeNum: number) => void;
+  setKioskMode: (enabled: boolean, config: AutoConnectConfig | null) => void;
 }
 
 export const deviceStoreInitializer: StateCreator<AppState> = (set, _get) => ({
@@ -42,6 +46,8 @@ export const deviceStoreInitializer: StateCreator<AppState> = (set, _get) => ({
   connectDialogOpen: false,
   nodeNumToBeRemoved: 0,
   nodeNumDetails: 0,
+  kioskMode: false,
+  autoConnectConfig: null,
 
   setRasterSources: (sources: RasterSource[]) => {
     set(
@@ -90,6 +96,14 @@ export const deviceStoreInitializer: StateCreator<AppState> = (set, _get) => ({
     set(() => ({
       nodeNumDetails: nodeNum,
     })),
+  setKioskMode: (enabled: boolean, config: AutoConnectConfig | null) => {
+    set(
+      produce<AppState>((draft) => {
+        draft.kioskMode = enabled;
+        draft.autoConnectConfig = config;
+      }),
+    );
+  },
 });
 
 const persistOptions: PersistOptions<AppState, AppData> = {

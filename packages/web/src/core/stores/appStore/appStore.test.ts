@@ -175,3 +175,37 @@ describe("AppStore – persistence: partialize + rehydrate", () => {
     }
   });
 });
+
+describe("AppStore – kiosk mode", () => {
+  beforeEach(() => {
+    idbMem.clear();
+    vi.clearAllMocks();
+  });
+
+  it("sets and gets kiosk mode flag", async () => {
+    const { useAppStore } = await freshStore(false);
+    const state = useAppStore.getState();
+
+    expect(state.kioskMode).toBe(false);
+    expect(state.autoConnectConfig).toBeNull();
+
+    const config = { transport: "http" as const, url: "http://test.local" };
+    state.setKioskMode(true, config);
+
+    expect(useAppStore.getState().kioskMode).toBe(true);
+    expect(useAppStore.getState().autoConnectConfig).toEqual(config);
+  });
+
+  it("clears kiosk mode", async () => {
+    const { useAppStore } = await freshStore(false);
+    const state = useAppStore.getState();
+
+    const config = { transport: "http" as const, url: "http://test.local" };
+    state.setKioskMode(true, config);
+    expect(useAppStore.getState().kioskMode).toBe(true);
+
+    state.setKioskMode(false, null);
+    expect(useAppStore.getState().kioskMode).toBe(false);
+    expect(useAppStore.getState().autoConnectConfig).toBeNull();
+  });
+});
