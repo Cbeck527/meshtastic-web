@@ -118,6 +118,16 @@
       "number": "Invalid format, expected a value in the range 410-930 MHz or 0 (use default)."
     }
   },
+  "kioskError": {
+    "title": "Unable to Connect to Device",
+    "description": "Failed to connect to the configured device at {{url}}. Please check that the device is online and accessible on your network.",
+    "retryButton": "Retry Connection",
+    "retrying": "Connecting..."
+  },
+  "configError": {
+    "title": "Invalid Auto-Connect Configuration",
+    "description": "The autoconnect.json file contains errors: {{error}}. Please fix the configuration file and reload the page."
+  },
   "yes": "Yes",
   "no": "No"
 }
