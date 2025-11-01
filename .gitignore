@@ -11,3 +11,6 @@ npm/
 **/LICENSE
 
 packages/protobufs/packages/ts/dist
+
+# Auto-connect config (local only, not committed)
+packages/web/public/autoconnect.json
