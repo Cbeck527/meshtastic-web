@@ -12,7 +12,6 @@ import { subscribeAll } from "@core/subscriptions.ts";
 import { randId } from "@core/utils/randId.ts";
 import { MeshDevice } from "@meshtastic/core";
 import { TransportHTTP } from "@meshtastic/transport-http";
-import { clear } from "idb-keyval";
 import { useEffect, useState } from "react";
 
 export interface UseAutoConnectResult {
@@ -38,9 +37,6 @@ export function useAutoConnect(): UseAutoConnectResult {
     setError(null);
 
     try {
-      // Clear IndexedDB to start fresh
-      await clear();
-
       // Get store methods
       const { addDevice } = useDeviceStore.getState();
       const { addNodeDB } = useNodeDBStore.getState();
