@@ -24,7 +24,7 @@ export interface UseAutoConnectResult {
 
 /**
  * Hook that handles auto-connect functionality for kiosk mode.
- * Loads config on mount, clears existing device state, and attempts connection.
+ * Loads config on mount and attempts connection if present.
  */
 export function useAutoConnect(): UseAutoConnectResult {
   const [loading, setLoading] = useState(true);
